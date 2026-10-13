@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>食譜份量換算：按人數調整食材用量 | GlossQuote</title>
+  <meta name="description" content="輸入食譜原份數與目標份數，在瀏覽器本機按比例換算各項食材。保留單位文字，支援適量項目，不做單位或烹調時間推測。">
+  <link rel="stylesheet" href="/styles/app.css">
+  <script type="module" src="/js/app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到食材工作表</a>
+  <header class="topbar">
+    <div class="topbar-content">
+      <nav aria-label="工具首頁"><a class="brand" href="https://glossquote.com/index.html">Gloss Tools <span class="brand-parent">by GlossQuote</span></a></nav>
+      <nav aria-label="語言"><span aria-current="page">繁中</span><a href="/en/index.html" lang="en" hreflang="en">English</a></nav>
+    </div>
+  </header>
+  <main id="main" class="canvas" tabindex="-1">
+    <div class="intro">
+      <h1>食譜份量換算</h1>
+      <p>把食譜調整到需要的人數，逐項計算新的食材用量。</p>
+      <p class="privacy-note">在本頁記憶體中計算，不上傳、不自動儲存；離開頁面即清除。</p>
+    </div>
+    <noscript><p class="error-summary">請啟用 JavaScript，才能在瀏覽器本機換算食材。</p></noscript>
+    <form id="recipe-form" autocomplete="off" novalidate>
+      <div class="servings-grid">
+        <div class="field">
+          <label for="servings-original">原份數</label>
+          <textarea id="servings-original" rows="1" inputmode="numeric" autocomplete="off" aria-describedby="servings-help servings-original-error">1</textarea>
+          <span class="field-error" id="servings-original-error"></span>
+        </div>
+        <div class="field">
+          <label for="servings-target">目標份數</label>
+          <textarea id="servings-target" rows="1" inputmode="numeric" autocomplete="off" aria-describedby="servings-help servings-target-error">1</textarea>
+          <span class="field-error" id="servings-target-error"></span>
+        </div>
+      </div>
+      <p id="servings-help" class="field-help">份數為 1–1000 的正整數。</p>
+      <section class="worksheet" aria-labelledby="ingredients-title">
+        <div class="section-heading">
+          <h2 id="ingredients-title">食材 <span id="row-count" class="row-count">1 / 50</span></h2>
+          <button id="example" class="button quiet" type="button">載入示例（4 → 6 份）</button>
+        </div>
+        <p id="quantity-help" class="field-help">原數量為 0–1000000，最多 3 位小數；只接受半形數字，不換算單位。名稱最多 80 字元，單位最多 24 字元。</p>
+        <div id="ingredients"></div>
+        <p id="error-summary" class="error-summary" role="alert" hidden></p>
+        <div class="actionbar">
+          <button id="add-row" class="button secondary" type="button">新增食材</button>
+          <button id="clear" class="button quiet" type="button">清除</button>
+          <button id="calculate" class="button primary" type="submit">計算份量</button>
+        </div>
+      </section>
+    </form>
+    <p id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></p>
+    <section class="results" aria-labelledby="result-title">
+      <div class="section-heading">
+        <h2 id="result-title">換算結果 <span id="result-servings" class="result-servings"></span></h2>
+        <button id="copy" class="button secondary" type="button" disabled>複製完整清單</button>
+      </div>
+      <p id="empty-result" class="empty-result">填好份數和食材後，按「計算份量」查看完整清單。</p>
+      <div id="result-content" hidden>
+        <table class="result-table">
+          <caption class="visually-hidden">食材的原量、換算後數量、單位和精度</caption>
+          <thead><tr><th scope="col">食材名稱</th><th scope="col">原量</th><th scope="col">換算後</th><th scope="col">單位</th><th scope="col">精度</th></tr></thead>
+          <tbody id="result-rows"></tbody>
+        </table>
+        <p class="rounding-note">以精確比例計算，最多顯示 3 位小數，採 half-up 四捨五入。標示「近似」的結果經過捨入；正值捨入為零時顯示「小於 0.001」。適量不縮放。</p>
+      </div>
+      <div id="copy-fallback" class="copy-fallback" hidden>
+        <label for="report-text">完整清單文字（可選取）</label>
+        <textarea id="report-text" readonly spellcheck="false" aria-describedby="copy-fallback-help"></textarea>
+        <p id="copy-fallback-help" class="field-help">選取文字後，使用裝置的複製功能。</p>
+        <button id="select-report" class="button secondary" type="button">選取完整文字</button>
+      </div>
+    </section>
+    <section class="help" aria-labelledby="help-title">
+      <h2 id="help-title">使用說明</h2>
+      <details><summary>可以換算單位嗎？</summary><p>不可以。g、ml、cup 等單位只當作文字，沿用原食譜的標籤，不推測密度或容量。</p></details>
+      <details><summary>「適量」怎麼處理？</summary><p>勾選「適量」會清空該列數量。原量和換算後都保持適量，不估計新的數量；取消勾選後需重新填數量。</p></details>
+      <details><summary>小數如何捨入？</summary><p>數量最多輸入 3 位小數。按份數精確計算比例，顯示到最多 3 位小數，恰好一半時向上捨入，並標示近似結果。</p></details>
+      <details><summary>烹調時間或溫度會一起換算嗎？</summary><p>不會。工具只計算食材的數學比例。鍋具、烹調時間、溫度、調味與食品安全仍需自行判斷。</p></details>
+      <details><summary>資料會保存嗎？</summary><p>資料只在目前頁面的記憶體中處理，不上傳、不自動儲存；清除、離開或重新載入頁面後不恢復草稿。自行複製後的內容由你決定貼到何處。</p></details>
+    </section>
+    <footer>Gloss Tools by GlossQuote · 本機預覽</footer>
+  </main>
+</body>
+</html>

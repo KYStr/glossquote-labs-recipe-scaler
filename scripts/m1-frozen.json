@@ -1,0 +1,14 @@
+[
+  {"path":"public/js/app.mjs","bytes":8532,"sha256":"0bcff4ded16333bd0a2fcef7ed53ecc62b11888f06e59e6244914ef6fc3dd7a2"},
+  {"path":"public/js/core/editor.mjs","bytes":2628,"sha256":"678f1e4db77e706cb906d78f990418e9daf3eb386a8ba9c3ba07f550627b8945"},
+  {"path":"public/js/core/recipe.mjs","bytes":5613,"sha256":"deaf19cc43030d575ce3cdcf3b6c6ebbf99e8b3f02108ebd6cbf151ffe8c177f"},
+  {"path":"public/js/core/report.mjs","bytes":585,"sha256":"4054afa7dfdd1c7e748482ccde6272a0316063293102f1f518b7f0a43a36c482"},
+  {"path":"public/js/core/session.mjs","bytes":2151,"sha256":"cca885602c7cdb7d4cd6eba94ff26f52ed30c043e437ddea1af07a1eb14a59d6"},
+  {"path":"public/js/i18n.mjs","bytes":5227,"sha256":"77f5477aac03cdd804946df1d75c04be45da84126d106f39328be67d97d7ed2f"},
+  {"path":"public/js/view.mjs","bytes":1429,"sha256":"ce5ad5d6817c00a226b2b1d295c6f789b7f25369f8c6c8c2daf5b58f8d7a2efc"},
+  {"path":"public/styles/app.css","bytes":11032,"sha256":"baa86ae8a48c337e8fd3e2a42042f00fb9701233b2b2f756efbbcedd71f8b384"},
+  {"path":"test/core.test.mjs","bytes":15904,"sha256":"5b1655f93695f795f51664b2005a0e8343efc8f65e20961405edc67dcd51e73d"},
+  {"path":"test/fixtures/oracles.json","bytes":1169,"sha256":"e37fd8fd5cd282fcc842cc173a4aa9d44ae28c4d6c17eb18d63148b48605db92"},
+  {"path":"test/server.test.mjs","bytes":4735,"sha256":"acbef4f47e77dd41056e2e7a7d52be0cfc4d708d84faa7373a5b2cd8d2406b38"},
+  {"path":"test/session.test.mjs","bytes":9403,"sha256":"56a7499f94d0854823c10fc569df3664642feebaa22cd4ab3e5e779f17516084"}
+]

@@ -1,0 +1,5 @@
+/dist/
+/dist-production/
+/node_modules/
+/test/.sandbox-*/
+*.log

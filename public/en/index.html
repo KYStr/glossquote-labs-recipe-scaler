@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Recipe Scaler: Adjust Ingredient Quantities by Servings | GlossQuote</title>
+  <meta name="description" content="Scale recipe ingredient amounts locally by changing the original and target servings. Keep unit labels and leave “to taste” ingredients unchanged; no unit or cooking-time conversion.">
+  <link rel="stylesheet" href="/styles/app.css">
+  <script type="module" src="/js/app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the ingredient worksheet</a>
+  <header class="topbar">
+    <div class="topbar-content">
+      <nav aria-label="Tools home"><a class="brand" href="https://glossquote.com/en/index.html">Gloss Tools <span class="brand-parent">by GlossQuote</span></a></nav>
+      <nav aria-label="Language"><a href="/index.html" lang="zh-Hant" hreflang="zh-Hant">繁中</a><span aria-current="page">English</span></nav>
+    </div>
+  </header>
+  <main id="main" class="canvas" tabindex="-1">
+    <div class="intro">
+      <h1>Recipe scaler</h1>
+      <p>Change the serving count and recalculate each ingredient amount for your recipe.</p>
+      <p class="privacy-note">Calculated in this page’s memory. No uploads or automatic saving; leaving the page clears it.</p>
+    </div>
+    <noscript><p class="error-summary">Enable JavaScript to scale ingredients locally in your browser.</p></noscript>
+    <form id="recipe-form" autocomplete="off" novalidate>
+      <div class="servings-grid">
+        <div class="field">
+          <label for="servings-original">Original servings</label>
+          <textarea id="servings-original" rows="1" inputmode="numeric" autocomplete="off" aria-describedby="servings-help servings-original-error">1</textarea>
+          <span class="field-error" id="servings-original-error"></span>
+        </div>
+        <div class="field">
+          <label for="servings-target">Target servings</label>
+          <textarea id="servings-target" rows="1" inputmode="numeric" autocomplete="off" aria-describedby="servings-help servings-target-error">1</textarea>
+          <span class="field-error" id="servings-target-error"></span>
+        </div>
+      </div>
+      <p id="servings-help" class="field-help">Servings must be a whole number from 1 to 1000.</p>
+      <section class="worksheet" aria-labelledby="ingredients-title">
+        <div class="section-heading">
+          <h2 id="ingredients-title">Ingredients <span id="row-count" class="row-count">1 / 50</span></h2>
+          <button id="example" class="button quiet" type="button">Load example (4 → 6 servings)</button>
+        </div>
+        <p id="quantity-help" class="field-help">Amounts: 0–1000000, up to 3 decimal places, using ASCII digits. Units are not converted. Names: up to 80 characters; units: up to 24.</p>
+        <div id="ingredients"></div>
+        <p id="error-summary" class="error-summary" role="alert" hidden></p>
+        <div class="actionbar">
+          <button id="add-row" class="button secondary" type="button">Add ingredient</button>
+          <button id="clear" class="button quiet" type="button">Clear</button>
+          <button id="calculate" class="button primary" type="submit">Calculate quantities</button>
+        </div>
+      </section>
+    </form>
+    <p id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></p>
+    <section class="results" aria-labelledby="result-title">
+      <div class="section-heading">
+        <h2 id="result-title">Scaled recipe <span id="result-servings" class="result-servings"></span></h2>
+        <button id="copy" class="button secondary" type="button" disabled>Copy complete list</button>
+      </div>
+      <p id="empty-result" class="empty-result">Enter the servings and ingredients, then choose “Calculate quantities” to see the complete list.</p>
+      <div id="result-content" hidden>
+        <table class="result-table">
+          <caption class="visually-hidden">Original and scaled ingredient amounts, unit labels, and precision</caption>
+          <thead><tr><th scope="col">Ingredient name</th><th scope="col">Original</th><th scope="col">Scaled</th><th scope="col">Unit</th><th scope="col">Precision</th></tr></thead>
+          <tbody id="result-rows"></tbody>
+        </table>
+        <p class="rounding-note">Calculated as an exact ratio and displayed with up to 3 decimal places using half-up rounding. Rounded values are marked “Approximate”. Positive values that round to zero appear as “&lt; 0.001”. To-taste amounts stay unchanged.</p>
+      </div>
+      <div id="copy-fallback" class="copy-fallback" hidden>
+        <label for="report-text">Complete list text (selectable)</label>
+        <textarea id="report-text" readonly spellcheck="false" aria-describedby="copy-fallback-help"></textarea>
+        <p id="copy-fallback-help" class="field-help">Select the text, then use your device’s copy command.</p>
+        <button id="select-report" class="button secondary" type="button">Select complete text</button>
+      </div>
+    </section>
+    <section class="help" aria-labelledby="help-title">
+      <h2 id="help-title">How it works</h2>
+      <details><summary>Can I convert units?</summary><p>No. Labels such as g, ml, and cup are kept as text. The tool does not estimate density or convert volume.</p></details>
+      <details><summary>What happens to “To taste”?</summary><p>Choosing “To taste” clears that row’s amount. Both original and scaled amounts remain to taste. Turning it off requires a new amount.</p></details>
+      <details><summary>How are decimals rounded?</summary><p>Enter up to 3 decimal places. The serving ratio is calculated exactly, then displayed with up to 3 decimal places. A value exactly halfway rounds up; rounded results are marked approximate.</p></details>
+      <details><summary>Do cooking time and temperature scale too?</summary><p>No. This tool only calculates mathematical ingredient ratios. Choose suitable cookware, cooking time, temperature, seasoning, and food-safety practices yourself.</p></details>
+      <details><summary>Is my recipe saved?</summary><p>Inputs are processed in the current page’s memory without uploads or automatic saving. Clearing, leaving, or reloading does not restore a draft. You decide where to paste any text you copy.</p></details>
+    </section>
+    <footer>Gloss Tools by GlossQuote · Local preview</footer>
+  </main>
+</body>
+</html>
